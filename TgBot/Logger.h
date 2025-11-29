@@ -21,23 +21,23 @@ public:
   Logger(const Logger&) = delete;
   Logger& operator=(const Logger&) = delete;
 
-  void initialize(const std::string& app_name = "TelegramBot")
+  void initialize(const std::string& appName = "TelegramBot")
   {
-    std::call_once(_initFlag, [&app_name]()
+    std::call_once(_initFlag, [&appName]()
       {
         try
         {
           auto consoleSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
           consoleSink->set_level(spdlog::level::debug);
-          consoleSink->set_pattern("[%Y-%m-%d %H:%M:%S] [%^%l%$] [%n] %v");
+          consoleSink->set_pattern("[%d-%m-%Y %H:%M:%S] [%^%l%$] [%n] %v");
 
           auto fileSink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
-            "logs/" + app_name + ".log", 1024 * 1024 * 10, 5);
+            "logs/" + appName + ".log", 1024 * 1024 * 10, 5);
           fileSink->set_level(spdlog::level::debug);
-          fileSink->set_pattern("[%Y-%m-%d %H:%M:%S] [%l] [%n] [%s:%#] %v");
+          fileSink->set_pattern("[%d-%m-%Y %H:%M:%S] [%l] [%n] [%s:%#] %v");
 
           std::vector<spdlog::sink_ptr> sinks{ consoleSink, fileSink };
-          auto logger = std::make_shared<spdlog::logger>(app_name, begin(sinks), end(sinks));
+          auto logger = std::make_shared<spdlog::logger>(appName, begin(sinks), end(sinks));
           logger->set_level(spdlog::level::debug);
           logger->flush_on(spdlog::level::warn);
 

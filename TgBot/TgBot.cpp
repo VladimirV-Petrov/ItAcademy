@@ -6,11 +6,7 @@
 
 //Установка библиотек через vcpkg - https://github.com/microsoft/vcpkg
 
-#include <tgbot/tgbot.h>
-#include <nlohmann/json.hpp>
-
 #include "Logger.h"
-
 #include "SqlLiteDatabase.h"
 #include "ConfigReader.h"
 #include "TelegramBotHandler.h"
@@ -28,7 +24,7 @@ int main()
         exit(0);
       });
 
-    // Чтение конфигурации
+    //Чтение конфигурации
     ConfigReader config;
     if (!config.isValid()) 
     {
@@ -37,6 +33,7 @@ int main()
     	return -1;
     }
 
+    //Инициализация базы 
     SqlLiteDatabase sqlLileDb("test.db");
     if (!sqlLileDb.initialize())
     {
@@ -47,7 +44,7 @@ int main()
 
     std::string token = config.getBotToken();
 
-    // Создание и запуск бота
+    //Создание и запуск бота
     TelegramBotHandler botHandler(token, sqlLileDb);
   }
   catch (const std::exception& e) 

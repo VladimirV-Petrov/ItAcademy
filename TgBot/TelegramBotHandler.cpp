@@ -9,7 +9,7 @@
 
 TelegramBotHandler::TelegramBotHandler(const std::string& token, SqlLiteDatabase& database) : _bot(token), _database(database)
 {
-  spdlog::info("Bot username:  {}", _bot.getApi().getMe()->username);
+  spdlog::info("Bot username: {}", _bot.getApi().getMe()->username);
 
   _bot.getEvents().onAnyMessage([this](TgBot::Message::Ptr message) 
     {
